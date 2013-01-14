@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+#WindRiver crap
+./PPCgnu603
+*.*project
+*.wrmakefile
