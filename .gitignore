@@ -13,6 +13,6 @@
 *.a
 
 #WindRiver crap
-./PPCgnu603
+./PPC603gnu
 *.*project
 *.wrmakefile
