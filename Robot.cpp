@@ -160,6 +160,8 @@ void Robot::OperatorControl()
 			break;
 		
 		case JSM_FFW_STATE:
+			if(!pad.GetButton(pad.kLeftBumper))
+				kLeftBumperIncrementSpeed = 0;
 			if( pad.GetButton(pad.kAButton) )
 			{
 				jag.Set(-0.5);
@@ -173,7 +175,7 @@ void Robot::OperatorControl()
 			}
 			
 			else if ( pad.GetButton(pad.kLeftBumper) )
-			{
+			{			
 #ifdef WITH_ENCODER
 				float curr = jag.GetSpeed();
 #else
@@ -249,6 +251,17 @@ void Robot::OperatorControl()
 				jag.Set(wanted);
 				state = JSM_DEC_STATE;
 			}
+			//NEW STUFF 11/15
+			//Catches the left bumper press to increase the speed by 0.1, then remains in the INC state
+			else if(pad.GetButton(pad.kLeftBumper))
+			{
+#ifdef WITH_ENCODER
+				float curr = jag.GetSpeed();
+#else
+				float curr = jag.Get();
+				float wanted = curr + .10;
+				jag.set(wanted);
+			}
 			
 			else if( pad.GetButton(pad.kYButton) )
 			{
@@ -283,6 +296,18 @@ void Robot::OperatorControl()
 				state = JSM_INC_STATE;
 			}
 			
+			//NEW STUFF
+			//Catches the right bumper press to decrease the speed by 0.1, then stays in the same DEC state
+			else if ( pad.GetButton(pad.kRightBumper) )
+			{
+#ifdef WITH_ENCODER
+				float curr = jag.GetSpeed();
+#else
+				float curr = jag.Get();
+#endif
+				float wanted = curr - 0.10;
+				jag.Set(wanted);
+			}
 			else if( pad.GetButton(pad.kYButton) )
 			{
 				jag.Set(0.50);

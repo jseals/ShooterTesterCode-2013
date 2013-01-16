@@ -75,7 +75,6 @@ namespace nr
 			void GamepadDrive( float driveX, float driveY, float driveZ );
 		private:	
 			static const double threshold = 0.0;
-			
 			float snap_value( float snapVal, float threshold, float actualVal );
 			
 			LiveWindow* lw;
