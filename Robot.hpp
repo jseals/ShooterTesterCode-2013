@@ -29,9 +29,9 @@ namespace nr
 		{
 			JSM_OFF_STATE,
 			JSM_FFW_STATE,
-			JSM_REV_STATE,
-			JSM_INC_STATE,
-			JSM_DEC_STATE
+			//JSM_REV_STATE,
+			JSM_INCSING,
+			//JSM_DECSING
 		} Motor_State;
 		
 		class Robot : public RobotBase

@@ -4,6 +4,8 @@
 
 #include "Robot.hpp"
 
+#include <cmath>
+
 using namespace nr::main;
 
 /*
@@ -120,6 +122,8 @@ void Robot::OperatorControl()
 		// The shooter button state machine
 		switch(state)
 		{
+		// The Off State
+		// Mostly so I can see it
 		case JSM_OFF_STATE:
 			if( pad.GetButton(pad.kYButton) )
 			{
@@ -127,6 +131,11 @@ void Robot::OperatorControl()
 				state = JSM_FFW_STATE;
 			}
 			
+			if( pad.GetButton(pad.kLeftBumper) )
+			{
+				state = JSM_INCSING;
+			}
+			/*
 			else if ( pad.GetButton(pad.kAButton) )
 			{
 				jag.Set(-0.5);
@@ -142,7 +151,7 @@ void Robot::OperatorControl()
 #endif
 				float wanted = curr + 0.10;
 				jag.Set(wanted);
-				state = JSM_INC_STATE;
+				state = JSM_INCSING;
 			}
 			
 			else if ( pad.GetButton(pad.kRightBumper) )
@@ -154,24 +163,25 @@ void Robot::OperatorControl()
 #endif
 				float wanted = curr - 0.10;
 				jag.Set(wanted);
-				state = JSM_DEC_STATE;
+				state = JSM_DECSING;
 			}
 			
 			break;
-		
+		*/
+		// The Forward State
+		// Mostly so I can see it
 		case JSM_FFW_STATE:
-			if( pad.GetButton(pad.kAButton) )
+			if( pad.GetButton(pad.kLeftBumper) )
 			{
-				jag.Set(-0.5);
-				state = JSM_REV_STATE;
+				state = JSM_INCSING;
 			}
-			
+	
 			else if( pad.GetButton(pad.kBButton) )
 			{
 				jag.Set(0.0);
 				state = JSM_OFF_STATE;
 			}
-			
+			/*
 			else if ( pad.GetButton(pad.kLeftBumper) )
 			{
 #ifdef WITH_ENCODER
@@ -181,7 +191,7 @@ void Robot::OperatorControl()
 #endif
 				float wanted = curr + 0.10;
 				jag.Set(wanted);
-				state = JSM_INC_STATE;
+				state = JSM_INCSING;
 			}
 			
 			else if ( pad.GetButton(pad.kRightBumper) )
@@ -193,11 +203,14 @@ void Robot::OperatorControl()
 #endif
 				float wanted = curr - 0.10;
 				jag.Set(wanted);
-				state = JSM_DEC_STATE;
+				state = JSM_DECSING;
 			}
-			
+			*/
 			break;
 			
+		/*	
+		// The Reverse State
+		// Mostly so I can see it
 		case JSM_REV_STATE:
 			if( pad.GetButton(pad.kYButton) )
 			{
@@ -220,38 +233,15 @@ void Robot::OperatorControl()
 #endif
 				float wanted = curr + 0.10;
 				jag.Set(wanted);
-				state = JSM_INC_STATE;
+				state = JSM_INCSING;
 			}
 			
 			else if ( pad.GetButton(pad.kRightBumper) )
 			{
-#ifdef WITH_ENCODER
-				float curr = jag.GetSpeed();
-#else
-				float curr = jag.Get();
-#endif
-				float wanted = curr - 0.10;
-				jag.Set(wanted);
-				state = JSM_DEC_STATE;
+
 			}
-			
-			break;
-		
-		case JSM_INC_STATE:
-			if ( pad.GetButton(pad.kRightBumper) )
-			{
-#ifdef WITH_ENCODER
-				float curr = jag.GetSpeed();
-#else
-				float curr = jag.Get();
-#endif
-				float wanted = curr - 0.10;
-				jag.Set(wanted);
-				state = JSM_DEC_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kLeftBumper) )
-			{
+			*/
+		case JSM_INCSING:
 #ifdef WITH_ENCODER
 				float curr = jag.GetSpeed();
 #else
@@ -259,71 +249,7 @@ void Robot::OperatorControl()
 #endif
 				float wanted = curr + 0.10;
 				jag.Set(wanted);
-				state = JSM_INC_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kYButton) )
-			{
-				jag.Set(0.50);
 				state = JSM_FFW_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kBButton) )
-			{
-				jag.Set(0.0);
-				state = JSM_OFF_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kAButton) )
-			{
-				jag.Set(-0.50);
-				state = JSM_REV_STATE;
-			}
-			
-			break;
-			
-		case JSM_DEC_STATE:
-			if ( pad.GetButton(pad.kLeftBumper) )
-			{
-#ifdef WITH_ENCODER
-				float curr = jag.GetSpeed();
-#else
-				float curr = jag.Get();
-#endif
-				float wanted = curr + 0.10;
-				jag.Set(wanted);
-				state = JSM_INC_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kRightBumper) )
-			{
-#ifdef WITH_ENCODER
-				float curr = jag.GetSpeed();
-#else
-				float curr = jag.Get();
-#endif
-				float wanted = curr - 0.10;
-				jag.Set(wanted);
-				state = JSM_DEC_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kYButton) )
-			{
-				jag.Set(0.50);
-				state = JSM_FFW_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kBButton) )
-			{
-				jag.Set(0.0);
-				state = JSM_OFF_STATE;
-			}
-			
-			else if( pad.GetButton(pad.kAButton) )
-			{
-				jag.Set(-0.50);
-				state = JSM_REV_STATE;
-			}
 			
 			break;
 		}
