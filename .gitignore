@@ -18,3 +18,8 @@ PPC603gnu/
 *.cproject
 *.wrproject
 *.wrmakefile
+
+# VIm
+.*
+*~
+*.swp

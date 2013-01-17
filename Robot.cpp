@@ -19,22 +19,12 @@ using namespace nr::main;
 float Robot::snap_value(float snapVal, float threshold, float actualVal )
 {
 	// If the joystick axis is greater than 0 minus the threshold
-	float final = (( actualVal > (snapVal - threshold) )
-			
-	&& 
-	
-	// and if the joystick axis is less than 0 plus the threshold
-	( actualVal < (snapVal + threshold) ))  
-	
-	?
-	
-	// make it equal 0 
-	snapVal 
-	:
-	// Else, make it equal the joystick axis
-	actualVal;	
-	
-	return final;
+	if( actualVal > ( snapVal - threshold ))
+		// and if the joystick axis is less than 0 plus the threshold
+		if( actualVal < ( snapVal + threshold ))
+			return snapVal; // make it equal 0 
+
+	return actualVal; // Else, make it equal the joystick axis
 }
 
 /*
