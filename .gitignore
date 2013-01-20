@@ -13,8 +13,12 @@
 *.a
 
 #WindRiver crap
-PPC603gnu/
+PPC603gnu/*
 *.project
 *.cproject
 *.wrproject
 *.wrmakefile
+
+# Hidden files
+.*
+*~
