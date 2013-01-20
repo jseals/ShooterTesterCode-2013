@@ -250,6 +250,18 @@ void Robot::OperatorControl()
 				state = JSM_DEC_STATE;
 			}
 			
+			else if( pad.GetButton(pad.kLeftBumper) )
+			{
+#ifdef WITH_ENCODER
+				float curr = jag.GetSpeed();
+#else
+				float curr = jag.Get();
+#endif
+				float wanted = curr + 0.10;
+				jag.Set(wanted);
+				state = JSM_INC_STATE;
+			}
+			
 			else if( pad.GetButton(pad.kYButton) )
 			{
 				jag.Set(0.50);
@@ -281,6 +293,18 @@ void Robot::OperatorControl()
 				float wanted = curr + 0.10;
 				jag.Set(wanted);
 				state = JSM_INC_STATE;
+			}
+			
+			else if( pad.GetButton(pad.kRightBumper) )
+			{
+#ifdef WITH_ENCODER
+				float curr = jag.GetSpeed();
+#else
+				float curr = jag.Get();
+#endif
+				float wanted = curr - 0.10;
+				jag.Set(wanted);
+				state = JSM_DEC_STATE;
 			}
 			
 			else if( pad.GetButton(pad.kYButton) )
